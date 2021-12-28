@@ -8,11 +8,11 @@ class Header extends React.Component {
             tokensSold: "0",
             name: "",
             owner: "",
-            totalSupply:""
+            totalSupply: ""
         }
     }
 
-  async componentDidMount(){
+    async componentDidMount() {
         let provider = new ethers.providers.Web3Provider(window.ethereum)
         const contract = new ethers.Contract(
             ADDRESS,
@@ -27,10 +27,10 @@ class Header extends React.Component {
         ownerBalance = parseInt(ownerBalance)
         let sold = (supply - ownerBalance) / (10 ** DECIMALS)
         this.setState({
-          tokensSold:sold,
-          name : tokenName,
-          owner : ownerAddress,
-          totalSupply : supply / (10 ** DECIMALS)  
+            tokensSold: sold,
+            name: tokenName,
+            owner: ownerAddress,
+            totalSupply: supply / (10 ** DECIMALS)
         })
     }
 
@@ -38,13 +38,13 @@ class Header extends React.Component {
         return (
             <div>
                 <div> This is the {this.state.name} fungible token on Polygon, Mumbai testnet. </div>
-                <hr/>
+                <hr />
                 <div> Token address is: {ADDRESS} </div>
-                <hr/>
+                <hr />
                 <div> Owner address is {this.state.owner} </div>
-                <hr/>
+                <hr />
                 <div> Tokens already sold: {this.state.tokensSold} / {this.state.totalSupply}</div>
-                <hr/>
+                <hr />
             </div>
         )
     }

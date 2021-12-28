@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract Token{
+contract InnoCrypto {
     uint256 public totalSupply_;
     string public name;
     string public symbol;
@@ -88,6 +88,7 @@ contract Token{
         require(owner != msg.sender);
         require(msg.value == (numOfTokens / 10**decimals) * 0.000000001 ether);
         balances[msg.sender] = balances[msg.sender] + numOfTokens;
+        balances[owner] = balances[owner] - numOfTokens;
         emit Transfer(owner, msg.sender, numOfTokens);
         return true;
     }

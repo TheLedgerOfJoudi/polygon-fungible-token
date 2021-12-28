@@ -1,6 +1,6 @@
 import React from "react";
 import { ethers } from "ethers";
-import { ADDRESS, ABI } from "../../config";
+import { ADDRESS, ABI, DECIMALS } from "../../config";
 
 class GetBalance extends React.Component {
     constructor() {
@@ -29,11 +29,10 @@ class GetBalance extends React.Component {
             provider
         )
         let queriedBalance = await contract.balanceOf(this.state.address)
-        queriedBalance = parseInt(queriedBalance)
+        queriedBalance = parseInt(queriedBalance) / (10 ** DECIMALS)
         this.setState({
             balance: queriedBalance
         })
-        console.log(queriedBalance)
     }
 
     render() {
@@ -49,7 +48,7 @@ class GetBalance extends React.Component {
                     <button type="submit">Get Balance</button>
                 </form>
                 <div>This address has {this.state.balance} tokens</div>
-                <hr/>
+                <hr />
             </div>
         )
     }

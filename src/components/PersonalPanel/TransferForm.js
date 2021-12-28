@@ -2,10 +2,11 @@ import React from "react";
 import { ethers } from "ethers";
 import { ABI, ADDRESS, DECIMALS } from "../../config";
 
-class BuyForm extends React.Component {
+class TransferForm extends React.Component {
     constructor() {
         super()
         this.state = {
+            receiver: "",
             numOfTokens: "0"
         }
         this.handleChange = this.handleChange.bind(this)
@@ -29,27 +30,32 @@ class BuyForm extends React.Component {
             provider
         )
         const token = contract.connect(signer)
-        let numberOfTokensToBuy = this.state.numOfTokens * (10 ** DECIMALS)
-        const overrides = {
-            value: ethers.utils.parseEther("0.000000001")
-        }
-        await token.buy(numberOfTokensToBuy, overrides)
+        let numberOfTokensToSend = this.state.numOfTokens * (10 ** DECIMALS)
+        await token.transfer(this.state.receiver, numberOfTokensToSend)
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
                 <input
+                    type="text"
+                    placeholder="Receiver"
+                    name="receiver"
+                    value={this.state.receiver}
+                    onChange={this.handleChange}
+                />
+                <input
                     type="number"
-                    placeholder="Buy!"
+                    placeholder="Transfer!"
                     name="numOfTokens"
                     value={this.state.numOfTokens}
                     onChange={this.handleChange}
                 />
-                <button type="submit"> Buy </button>
+                <br />
+                <button type="submit"> Transfer </button>
                 <hr />
             </form>
         )
     }
 }
-export default BuyForm
+export default TransferForm
